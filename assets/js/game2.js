@@ -10,11 +10,7 @@ var enemyAttack = 12;
 console.log(enemyNames);
 console.log(enemyNames.length);
 
-// game states
-//"WIN" - player robot has defeated all enemies
-// * fight all enemies
-// * defeat each enemy
-//"LOSE" = player robot's health is zero or less
+
 
 // fight function (now with parameter for enemy's name)
 var fight = function (enemyName) {
@@ -42,14 +38,7 @@ var fight = function (enemyName) {
     // remove enemy's health by subtracting the amount set in the playerAttack variable
     enemyHealth = enemyHealth - playerAttack;
     console.log(
-      playerName +
-        " attacked " +
-        enemyName +
-        ". " +
-        enemyName +
-        " now has " +
-        enemyHealth +
-        " health remaining."
+      playerName +  " attacked " +  enemyName +  ". " +  enemyName +  " now has " +  enemyHealth +  " health remaining."
     );
 
     // check enemy's health
@@ -88,25 +77,7 @@ var startGame = function () {
   playerHealth = 100;
   playerAttack = 10;
   playerMoney = 10;
-  var endGame = function () {
-    if (playerHealth > 0){
-      window.alert(" Great job, you've survived the game! you now have a score")
-    } else{
-      window.alert("you've lost your robot in battle.")
-    }
-    var playAgainConfirm = window.confirm("would you like to play again?");
-
-    if (playAgainConfirm){
-      startGame();
-    } else {
-      window.alert("Thank you for playing! come back soon!");
-    }
-  };
-  var shop = function(){
-    var shopOptionPrimpt = window.prompt(
-      "would you like to REFILL your health, UPGRADE your attack, or LEAVE the game?"
-    );
-  };
+  
   for (var i = 0; i < enemyNames.length; i++) {
     // if player is still alive, keep fighting
     if (playerHealth > 0) {
@@ -128,6 +99,40 @@ var startGame = function () {
 
         // if yes go to store() function
         if(storeConfirm){
+          shop();
+        }
+      }
+    }
+
+    else{
+      window.alert("you have lost your robot in battle! game over!");
+      break;
+    }
+  }
+
+  endGame();
+};
+
+var endGame = function () {
+  window.alert("the games has now ended. lets see how you did!")
+    //if okay is still alive
+  if (playerHealth > 0){
+    window.alert(" Great job, you've survived the game! you now have a score of " + playerMoney + '.');
+  } else{
+    window.alert("you've lost your robot in battle.")
+  }
+  var playAgainConfirm = window.confirm("would you like to play again?");
+
+  if (playAgainConfirm){
+    startGame();
+  } else {
+    window.alert("Thank you for playing! come back soon!");
+  }
+};
+var shop = function(){
+  var shopOptionPrompt = window.prompt(
+    "would you like to REFILL your health, UPGRADE your attack, or LEAVE the game?"
+  );
       // use switch to carry out action
 switch (shopOptionPrompt) {
   case "REFILL":
@@ -142,7 +147,7 @@ switch (shopOptionPrompt) {
     else {
       window.alert("You don't have enough money!");
     }
-    break;
+      break;
     case "UPGRADE":
     case "upgrade":
       if (playerMoney >= 7) {
@@ -155,11 +160,7 @@ switch (shopOptionPrompt) {
       else {
         window.alert("You don't have enough money!");
       }
-
-    // increase attack and decrease money
-    playerAttack = playerAttack + 6;
-    playerMoney = playerMoney - 7;
-    break;
+      break;
     case "LEAVE":
     case "leave":
       window.alert("Leaving the store.");
@@ -172,17 +173,7 @@ switch (shopOptionPrompt) {
     // call shop() again to force player to pick a valid option
     shop();
     break;
-}
-    }
-  }
-}
-    // if player isn't alive, stop the game
-    else {
-      window.alert("You have lost your robot in battle! Game Over!");
-      break;
-    }
-    // play again
-    endGame();
   }
 };
-fight();
+
+startGame();
